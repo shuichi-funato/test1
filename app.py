@@ -21,9 +21,11 @@ def load_model():
 # ImageNetのラベル（クラス名）を取得
 @st.cache_data
 def get_labels():
-    url = "https://raw.githubusercontent.com/prakhar1989/LabelsForImageNet/master/resnet18_labels.txt"
+    # ImageNetのラベルが1行ずつ書かれたURL
+    url = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
     response = requests.get(url)
-    labels = eval(response.text)
+    # 1行ずつ読み込んでリストに格納（改行コードを削除）
+    labels = [line.strip() for line in response.text.splitlines()]
     return labels
 
 model = load_model()
